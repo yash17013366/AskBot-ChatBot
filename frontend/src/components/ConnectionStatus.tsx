@@ -14,7 +14,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ status, mess
     return (
       <div
         id="connection-status-connecting"
-        className="flex items-center gap-2.5 p-3.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-900 text-blue-700 dark:text-blue-300 text-sm animate-pulse"
+        className="flex items-center gap-2.5 p-3 rounded-xl bg-sky-50 dark:bg-sky-950/50 border border-sky-200 dark:border-sky-800/60 text-sky-700 dark:text-sky-300 text-sm"
       >
         <Loader2 className="w-4 h-4 animate-spin shrink-0" />
         <span>Verifying API key with Google Gemini...</span>
@@ -26,10 +26,10 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ status, mess
     return (
       <div
         id="connection-status-success"
-        className="flex items-center gap-2.5 p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 text-sm font-medium"
+        className="flex items-center gap-2.5 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 text-sm font-medium"
       >
-        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-        <span>✓ LLM Connected</span>
+        <CheckCircle2 className="w-4 h-4 shrink-0" />
+        <span>Connected to Gemini ✓</span>
       </div>
     );
   }
@@ -38,10 +38,10 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({ status, mess
     return (
       <div
         id="connection-status-error"
-        className="flex items-start gap-2.5 p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-sm"
+        className="flex items-start gap-2.5 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800/60 text-rose-700 dark:text-rose-300 text-sm"
       >
-        <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
-        <span>✕ {message || 'Invalid Gemini API key. Please check your key and try again.'}</span>
+        <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+        <span>{message || 'Invalid Gemini API key. Please check your key and try again.'}</span>
       </div>
     );
   }

@@ -21,24 +21,24 @@ export const Header: React.FC<HeaderProps> = ({
   const getPersonaBadge = () => {
     if (!persona) return null;
 
-    let icon = <GraduationCap className="w-3.5 h-3.5" />;
+    let icon = <GraduationCap className="w-3 h-3" />;
     let label = 'Student';
-    let colorClasses = 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800';
+    let colorClasses = 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60';
 
     if (persona === 'it_person') {
-      icon = <Terminal className="w-3.5 h-3.5" />;
+      icon = <Terminal className="w-3 h-3" />;
       label = 'IT Person';
-      colorClasses = 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800';
+      colorClasses = 'bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800/60';
     } else if (persona === 'explorer') {
-      icon = <Compass className="w-3.5 h-3.5" />;
+      icon = <Compass className="w-3 h-3" />;
       label = 'Explorer';
-      colorClasses = 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-950/40 dark:text-purple-300 dark:border-purple-800';
+      colorClasses = 'bg-violet-50 dark:bg-violet-950/50 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800/60';
     }
 
     return (
       <div
         id="active-persona-badge"
-        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${colorClasses}`}
+        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium border ${colorClasses}`}
       >
         {icon}
         <span>{label}</span>
@@ -47,27 +47,25 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md">
-      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-30 w-full border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl transition-colors duration-200">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
         {/* Brand */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-sm">
-            <Bot className="w-5 h-5" />
+          <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white shadow-lg shadow-violet-900/30">
+            <Bot className="w-4 h-4" />
           </div>
-          <div>
-            <span className="font-bold text-lg text-gray-900 dark:text-white tracking-tight">
-              AskBot
-            </span>
-          </div>
+          <span className="font-bold text-base text-neutral-900 dark:text-white tracking-tight">
+            AskBot
+          </span>
           {persona && isConnected && (
-            <div className="hidden sm:block ml-2">
+            <div className="hidden sm:block">
               {getPersonaBadge()}
             </div>
           )}
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {persona && isConnected && (
             <div className="sm:hidden">
               {getPersonaBadge()}
@@ -81,11 +79,11 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={onDisconnect}
               id="disconnect-btn"
               type="button"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-rose-600 hover:text-rose-700 dark:text-rose-400 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-transparent hover:border-rose-200 dark:hover:border-rose-900/50 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-500 dark:text-neutral-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 border border-transparent hover:border-rose-200 dark:hover:border-rose-800/50 transition-all duration-150"
               title="Disconnect Gemini API Key"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Disconnect</span>
+              <span className="hidden sm:inline">Disconnect</span>
             </button>
           )}
         </div>

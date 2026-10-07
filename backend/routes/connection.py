@@ -1,7 +1,12 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from backend.models.requests import ConnectRequest
-from backend.services.gemini_service import verify_api_key, sanitize_error
+
+try:
+    from backend.models.requests import ConnectRequest
+    from backend.services.gemini_service import verify_api_key, sanitize_error
+except ModuleNotFoundError:
+    from models.requests import ConnectRequest
+    from services.gemini_service import verify_api_key, sanitize_error
 
 router = APIRouter(prefix="/api", tags=["connection"])
 

@@ -1,15 +1,28 @@
 """Main FastAPI application for AskBot."""
 
 import os
+import sys
+from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# Ensure both project root and backend dir are in sys.path
+backend_dir = Path(__file__).resolve().parent
+project_root = backend_dir.parent
+for p in [str(project_root), str(backend_dir)]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
 # Load environment variables if .env is present
 load_dotenv()
 
-from backend.routes.connection import router as connection_router
-from backend.routes.chat import router as chat_router
+try:
+    from backend.routes.connection import router as connection_router
+    from backend.routes.chat import router as chat_router
+except ModuleNotFoundError:
+    from routes.connection import router as connection_router
+    from routes.chat import router as chat_router
 
 app = FastAPI(
     title="AskBot API",
@@ -53,4 +66,4 @@ def health_check():
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))
-    uvicorn.run("backend.main:app", host="0.0.0.0", port=port, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)

@@ -1,11 +1,20 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from backend.models.requests import ChatRequest, ExpandRequest
-from backend.services.gemini_service import (
-    generate_chat_response,
-    generate_expanded_response,
-    sanitize_error
-)
+
+try:
+    from backend.models.requests import ChatRequest, ExpandRequest
+    from backend.services.gemini_service import (
+        generate_chat_response,
+        generate_expanded_response,
+        sanitize_error
+    )
+except ModuleNotFoundError:
+    from models.requests import ChatRequest, ExpandRequest
+    from services.gemini_service import (
+        generate_chat_response,
+        generate_expanded_response,
+        sanitize_error
+    )
 
 router = APIRouter(prefix="/api", tags=["chat"])
 

@@ -2,8 +2,120 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────────────────────
+   GLOBAL BASE STYLES
+───────────────────────────────────────────────────────────── */
 @layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    @apply antialiased text-gray-900 bg-gray-50 dark:bg-gray-950 dark:text-gray-100;
+    @apply bg-neutral-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100;
+    min-height: 100dvh;
+  }
+
+  /* Custom scrollbar — webkit */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-600;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #404040 transparent;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(139, 92, 246, 0.35);
+    color: #fff;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROSE (Markdown) OVERRIDES — dark first
+───────────────────────────────────────────────────────────── */
+@layer components {
+  .askbot-prose {
+    @apply text-neutral-700 dark:text-neutral-200 text-sm leading-relaxed;
+  }
+  .askbot-prose p   { @apply mb-2 last:mb-0; }
+  .askbot-prose ul  { @apply list-disc pl-5 mb-2 space-y-1; }
+  .askbot-prose ol  { @apply list-decimal pl-5 mb-2 space-y-1; }
+  .askbot-prose li  { @apply text-sm; }
+  .askbot-prose h1,
+  .askbot-prose h2,
+  .askbot-prose h3  { @apply font-semibold text-neutral-900 dark:text-white mt-4 mb-2 first:mt-0; }
+  .askbot-prose h1  { @apply text-lg; }
+  .askbot-prose h2  { @apply text-base; }
+  .askbot-prose h3  { @apply text-sm; }
+  .askbot-prose strong { @apply font-semibold text-neutral-900 dark:text-white; }
+  .askbot-prose em     { @apply italic text-neutral-500 dark:text-neutral-300; }
+  .askbot-prose a      { @apply text-violet-600 dark:text-violet-400 underline underline-offset-2 hover:text-violet-500 dark:hover:text-violet-300; }
+  .askbot-prose blockquote {
+    @apply border-l-2 border-neutral-300 dark:border-neutral-600 pl-3 text-neutral-500 dark:text-neutral-400 italic my-2;
+  }
+  .askbot-prose pre {
+    @apply bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-100
+           rounded-xl p-4 my-3 overflow-x-auto text-xs font-mono;
+  }
+  .askbot-prose code {
+    @apply bg-neutral-100 dark:bg-neutral-800 text-violet-700 dark:text-violet-300 px-1.5 py-0.5 rounded text-xs font-mono;
+  }
+  .askbot-prose pre code {
+    @apply bg-transparent text-neutral-100 p-0;
+  }
+  .askbot-prose hr  { @apply border-neutral-200 dark:border-neutral-800 my-4; }
+
+  /* Loading typing dots */
+  .typing-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-neutral-500 inline-block;
+    animation: pulseDot 1.4s ease-in-out infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   UTILITY HELPERS
+───────────────────────────────────────────────────────────── */
+@layer utilities {
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+
+  /* Gradient text helper */
+  .gradient-text {
+    background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
