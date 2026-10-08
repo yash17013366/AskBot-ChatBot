@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bot, LogOut, GraduationCap, Terminal, Compass } from 'lucide-react';
+import { LogOut, GraduationCap, Terminal, Compass } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 import { PersonaId } from '../types/chat';
 
@@ -28,17 +28,17 @@ export const Header: React.FC<HeaderProps> = ({
     if (persona === 'it_person') {
       icon = <Terminal className="w-3 h-3" />;
       label = 'IT Person';
-      colorClasses = 'bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-sky-300 border-sky-200 dark:border-sky-800/60';
+      colorClasses = 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800/60';
     } else if (persona === 'explorer') {
       icon = <Compass className="w-3 h-3" />;
       label = 'Explorer';
-      colorClasses = 'bg-violet-50 dark:bg-violet-950/50 text-violet-700 dark:text-violet-300 border-violet-200 dark:border-violet-800/60';
+      colorClasses = 'bg-sky-50 dark:bg-sky-950/50 text-sky-700 dark:text-[#38b6ff] border-sky-200 dark:border-sky-800/60';
     }
 
     return (
       <div
         id="active-persona-badge"
-        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium border ${colorClasses}`}
+        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${colorClasses}`}
       >
         {icon}
         <span>{label}</span>
@@ -48,12 +48,14 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-30 w-full border-b border-neutral-200 dark:border-neutral-800 bg-white/80 dark:bg-neutral-950/80 backdrop-blur-xl transition-colors duration-200">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-        {/* Brand */}
+      <div className="w-full px-4 sm:px-8 h-14 flex items-center justify-between">
+        {/* Brand with attached logo */}
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-violet-600 flex items-center justify-center text-white shadow-lg shadow-violet-900/30">
-            <Bot className="w-4 h-4" />
-          </div>
+          <img
+            src="/logo.png"
+            alt="AskBot logo"
+            className="w-8 h-8 rounded-xl object-contain drop-shadow"
+          />
           <span className="font-bold text-base text-neutral-900 dark:text-white tracking-tight">
             AskBot
           </span>
@@ -65,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           {persona && isConnected && (
             <div className="sm:hidden">
               {getPersonaBadge()}

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Bot, User, Sparkles, Loader2 } from 'lucide-react';
+import { User, Sparkles, Loader2 } from 'lucide-react';
 import { ChatMessageItem } from '../types/chat';
 
 interface ChatMessageProps {
@@ -21,8 +21,8 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   if (isUser) {
     return (
       <div className="flex justify-end px-2 sm:px-4 py-1.5 animate-fade-in">
-        <div className="flex items-end gap-2.5 max-w-[80%] sm:max-w-[72%]">
-          <div className="bg-violet-600 text-white rounded-2xl rounded-br-sm px-4 py-2.5 text-sm leading-relaxed shadow-sm">
+        <div className="flex items-end gap-2.5 max-w-[85%] sm:max-w-[75%]">
+          <div className="bg-[#38b6ff] text-white rounded-2xl rounded-br-sm px-4 py-2.5 text-sm leading-relaxed shadow-sm">
             <p className="whitespace-pre-wrap">{message.content}</p>
           </div>
           <div className="w-7 h-7 rounded-full bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center shrink-0 mb-0.5">
@@ -33,13 +33,15 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
     );
   }
 
-  // AI message — no bubble, full-width, ChatGPT style
+  // AI message — no bubble, full-width, ChatGPT style with Robot logo avatar
   return (
     <div className="flex gap-3 sm:gap-4 px-2 sm:px-4 py-3 animate-fade-in">
       {/* Bot avatar */}
-      <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-violet-500/20 dark:shadow-violet-900/30">
-        <Bot className="w-3.5 h-3.5 text-white" />
-      </div>
+      <img
+        src="/logo.png"
+        alt="AskBot"
+        className="w-7 h-7 rounded-full object-contain shrink-0 mt-0.5 drop-shadow-sm"
+      />
 
       <div className="flex flex-col flex-1 min-w-0">
         {/* Markdown content */}
@@ -47,7 +49,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           <ReactMarkdown>{message.content}</ReactMarkdown>
         </div>
 
-        {/* Tell Me More */}
+        {/* Tell Me More in light blue #38b6ff */}
         {onTellMeMore && (
           <div className="mt-3">
             <button
@@ -55,7 +57,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
               disabled={disabled || isExpanding}
               id={`tell-me-more-btn-${message.id}`}
               type="button"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/40 hover:bg-violet-100 dark:hover:bg-violet-900/40 border border-violet-200 dark:border-violet-800/50 hover:border-violet-300 dark:hover:border-violet-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150 active:scale-95"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-sky-600 dark:text-[#38b6ff] bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 dark:hover:bg-sky-900/40 border border-sky-200 dark:border-sky-800/50 hover:border-[#38b6ff]/60 dark:hover:border-[#38b6ff]/60 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150 active:scale-95 cursor-pointer"
             >
               {isExpanding ? (
                 <>

@@ -42,9 +42,9 @@
     scrollbar-color: #404040 transparent;
   }
 
-  /* Selection */
+  /* Selection in light blue #38b6ff */
   ::selection {
-    background-color: rgba(139, 92, 246, 0.35);
+    background-color: rgba(56, 182, 255, 0.35);
     color: #fff;
   }
 }
@@ -68,7 +68,7 @@
   .askbot-prose h3  { @apply text-sm; }
   .askbot-prose strong { @apply font-semibold text-neutral-900 dark:text-white; }
   .askbot-prose em     { @apply italic text-neutral-500 dark:text-neutral-300; }
-  .askbot-prose a      { @apply text-violet-600 dark:text-violet-400 underline underline-offset-2 hover:text-violet-500 dark:hover:text-violet-300; }
+  .askbot-prose a      { @apply text-sky-600 dark:text-[#38b6ff] underline underline-offset-2 hover:text-sky-500 dark:hover:text-sky-300; }
   .askbot-prose blockquote {
     @apply border-l-2 border-neutral-300 dark:border-neutral-600 pl-3 text-neutral-500 dark:text-neutral-400 italic my-2;
   }
@@ -77,7 +77,7 @@
            rounded-xl p-4 my-3 overflow-x-auto text-xs font-mono;
   }
   .askbot-prose code {
-    @apply bg-neutral-100 dark:bg-neutral-800 text-violet-700 dark:text-violet-300 px-1.5 py-0.5 rounded text-xs font-mono;
+    @apply bg-neutral-100 dark:bg-neutral-800 text-sky-600 dark:text-[#38b6ff] px-1.5 py-0.5 rounded text-xs font-mono;
   }
   .askbot-prose pre code {
     @apply bg-transparent text-neutral-100 p-0;
@@ -111,9 +111,9 @@
     border: 1px solid rgba(255, 255, 255, 0.10);
   }
 
-  /* Gradient text helper */
+  /* Light blue #38b6ff gradient text helper */
   .gradient-text {
-    background: linear-gradient(135deg, #a78bfa 0%, #c4b5fd 100%);
+    background: linear-gradient(135deg, #38b6ff 0%, #7dd3fc 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Trash2, Sparkles, AlertCircle } from 'lucide-react';
+import { Trash2, AlertCircle, ArrowUpRight } from 'lucide-react';
 import { ChatMessage } from './ChatMessage';
 import { ChatInput } from './ChatInput';
 import { ChatMessageItem, PersonaId } from '../types/chat';
@@ -64,48 +64,60 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
       Outer wrapper: exactly fills the viewport below the header.
       No nested overflow — only the messages list scrolls.
     */
-    <div className="flex flex-col" style={{ height: 'calc(100dvh - 3.5rem)' }}>
+    <div className="flex flex-col w-full" style={{ height: 'calc(100dvh - 3.5rem)' }}>
 
       {/* ── Scrollable messages area ── */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto w-full px-2 sm:px-4 py-4">
+      <div className="flex-1 overflow-y-auto w-full">
+        <div className="w-full max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-8 py-6">
 
           {messages.length === 0 ? (
-            /* Empty state */
-            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 animate-fade-in">
-              <div className="w-12 h-12 rounded-2xl bg-violet-50 dark:bg-violet-950/50 border border-violet-200 dark:border-violet-800/50 flex items-center justify-center text-violet-600 dark:text-violet-400 mb-5 shadow-sm dark:shadow-violet-950/30">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
+            /* Empty state — spacious and wide like ChatGPT */
+            <div className="flex flex-col items-center justify-center min-h-[62vh] text-center px-4 animate-fade-in">
+              <img
+                src="/logo.png"
+                alt="AskBot logo"
+                className="w-16 h-16 sm:w-20 sm:h-20 object-contain mb-4 drop-shadow-md"
+              />
+              <h2 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white mb-2 tracking-tight">
                 Ready to chat
-              </h3>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-sm mb-8 leading-relaxed">
+              </h2>
+              <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 max-w-lg mb-10 leading-relaxed">
                 Ask anything — AskBot will respond in your chosen{' '}
-                <span className="text-violet-600 dark:text-violet-400 font-medium">
+                <span className="text-[#38b6ff] font-semibold">
                   {persona === 'student' ? 'Student' : persona === 'it_person' ? 'IT Person' : 'Explorer'}
                 </span>{' '}
                 persona tone.
               </p>
 
-              {/* Quick starter prompts */}
-              <div className="w-full max-w-sm flex flex-col gap-2">
-                <span className="text-[11px] uppercase tracking-widest font-semibold text-neutral-400 dark:text-neutral-500 mb-1">
+              {/* Quick starter prompts — horizontal responsive 3-column grid spanning across the screen */}
+              <div className="w-full max-w-4xl xl:max-w-5xl flex flex-col gap-3">
+                <span className="text-[11px] uppercase tracking-widest font-semibold text-neutral-400 dark:text-neutral-500 text-left">
                   Try asking
                 </span>
-                {getPersonaHints().map((hint, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => onInputChange(hint)}
-                    className="text-left px-4 py-3 rounded-xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-violet-300 dark:hover:border-violet-600 hover:bg-violet-50/50 dark:hover:bg-neutral-800/80 text-xs text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all duration-150 active:scale-[0.99] shadow-sm"
-                  >
-                    "{hint}"
-                  </button>
-                ))}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 w-full">
+                  {getPersonaHints().map((hint, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => onInputChange(hint)}
+                      className="group flex flex-col justify-between p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 hover:border-[#38b6ff] dark:hover:border-[#38b6ff] hover:bg-sky-50/40 dark:hover:bg-neutral-800/80 text-left transition-all duration-200 active:scale-[0.99] shadow-sm hover:shadow-md cursor-pointer"
+                    >
+                      <div className="flex items-center justify-between w-full mb-2.5">
+                        <span className="text-[11px] font-semibold text-sky-600 dark:text-[#38b6ff] tracking-wide uppercase">
+                          Suggestion {idx + 1}
+                        </span>
+                        <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#38b6ff] transition-colors" />
+                      </div>
+                      <span className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 group-hover:text-neutral-900 dark:group-hover:text-white leading-relaxed">
+                        "{hint}"
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           ) : (
             /* Message list */
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2">
               {messages.map((m) => (
                 <ChatMessage
                   key={m.id}
@@ -118,17 +130,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             </div>
           )}
 
-          {/* Loading indicator — typing dots */}
+          {/* Loading indicator — typing dots with bot logo avatar */}
           {isLoading && (
             <div className="flex gap-3 sm:gap-4 px-2 sm:px-4 py-3 animate-fade-in">
-              <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center shrink-0 mt-0.5 shadow-md shadow-violet-500/20 dark:shadow-violet-900/30">
-                <span className="w-3 h-3 flex items-center justify-center">
-                  <svg className="w-3 h-3 text-white animate-spin" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                  </svg>
-                </span>
-              </div>
+              <img
+                src="/logo.png"
+                alt="AskBot typing"
+                className="w-7 h-7 rounded-full object-contain shrink-0 mt-0.5 drop-shadow-sm"
+              />
               <div className="flex items-center gap-1.5 py-3">
                 <span className="typing-dot" />
                 <span className="typing-dot" />
@@ -141,11 +150,11 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         </div>
       </div>
 
-      {/* ── Composer bar ── */}
-      <div className="border-t border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl transition-colors duration-200">
+      {/* ── Composer bar — edge-to-edge container with matching wide inner layout ── */}
+      <div className="w-full border-t border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-xl transition-colors duration-200">
         {/* Error banner */}
         {errorMessage && (
-          <div className="max-w-3xl mx-auto px-4 pt-3">
+          <div className="w-full max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-8 pt-3">
             <div className="flex items-center gap-2 p-3 rounded-xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800/60 text-rose-700 dark:text-rose-300 text-xs sm:text-sm">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{errorMessage}</span>
@@ -153,7 +162,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           </div>
         )}
 
-        <div className="max-w-3xl mx-auto px-4 py-3">
+        <div className="w-full max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-8 py-3.5 sm:py-4">
           <ChatInput
             input={input}
             onInputChange={onInputChange}
@@ -163,19 +172,19 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           />
 
           {/* Footer controls */}
-          <div className="flex items-center justify-between mt-2 px-1">
+          <div className="flex items-center justify-between mt-2.5 px-1">
             <button
               onClick={onClearChat}
               disabled={messages.length === 0 || isLoading || !!expandingMessageId}
               id="clear-chat-btn"
               type="button"
-              className="inline-flex items-center gap-1.5 py-1 px-2 rounded-lg text-xs text-neutral-400 dark:text-neutral-500 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150"
+              className="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs text-neutral-400 dark:text-neutral-500 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-150 cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
               <span>Clear chat</span>
             </button>
 
-            <span className="hidden sm:inline text-[11px] text-neutral-400 dark:text-neutral-600">
+            <span className="text-[11px] text-neutral-400 dark:text-neutral-600">
               Sends latest 5 exchanges to Gemini for context
             </span>
           </div>
