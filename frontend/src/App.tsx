@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { WelcomeScreen } from './components/WelcomeScreen';
 import { ApiKeyForm } from './components/ApiKeyForm';
 import { ChatWindow } from './components/ChatWindow';
+import { SplashScreen } from './components/SplashScreen';
 import { PersonaId, ChatMessageItem, ConnectionState } from './types/chat';
 import {
   getStoredApiKey,
@@ -46,6 +47,32 @@ export const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [expandingMessageId, setExpandingMessageId] = useState<string | null>(null);
   const [chatError, setChatError] = useState<string | null>(null);
+
+  // 1-second splash animation that plays once when AskBot first loads
+  const [showSplash, setShowSplash] = useState<boolean>(() => {
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return false;
+    }
+    return true;
+  });
+  const [splashFading, setSplashFading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!showSplash) return;
+
+    let fadeTimer: ReturnType<typeof setTimeout>;
+    const splashTimer = setTimeout(() => {
+      setSplashFading(true);
+      fadeTimer = setTimeout(() => {
+        setShowSplash(false);
+      }, 250);
+    }, 1000);
+
+    return () => {
+      clearTimeout(splashTimer);
+      if (fadeTimer) clearTimeout(fadeTimer);
+    };
+  }, []);
 
   // Sync theme with HTML document element
   useEffect(() => {
@@ -221,6 +248,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-200">
+      {showSplash && <SplashScreen isFading={splashFading} />}
       <Header
         persona={selectedPersona}
         isConnected={connectionStatus === 'connected'}
